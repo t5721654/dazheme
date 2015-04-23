@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cn.ant.modules.product.dao.fruit.MaterialMapper">
+  <resultMap id="BaseResultMap" type="Material">
+    <id column="ID" jdbcType="VARCHAR" property="id" />
+    <result column="code" jdbcType="VARCHAR" property="code" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="size" jdbcType="DOUBLE" property="size" />
+    <result column="type" jdbcType="VARCHAR" property="type" />
+    <result column="stufix" jdbcType="VARCHAR" property="stufix" />
+    <result column="small_Thumb" jdbcType="VARCHAR" property="smallThumb" />
+    <result column="medium_Thumb" jdbcType="VARCHAR" property="mediumThumb" />
+    <result column="large_Thumb" jdbcType="VARCHAR" property="largeThumb" />
+    <result column="small_size" jdbcType="DOUBLE" property="smallSize" />
+    <result column="medium_size" jdbcType="DOUBLE" property="mediumSize" />
+    <result column="large_size" jdbcType="DOUBLE" property="largeSize" />
+    <result column="folder" jdbcType="VARCHAR" property="folder" />
+    <result column="office_id" jdbcType="VARCHAR" property="officeId" />
+    <result column="upload_time" jdbcType="TIME" property="uploadTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, code, name, size, type, stufix, small_Thumb, medium_Thumb, large_Thumb, small_size, 
+    medium_size, large_size, folder, office_id, upload_time
+  </sql>
+  <select id="get" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from material
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="delete" parameterType="java.lang.String">
+    delete from material
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="Material">
+    insert into material (ID, code, name, 
+      size, type, stufix, 
+      small_Thumb, medium_Thumb, large_Thumb, 
+      small_size, medium_size, large_size, 
+      folder, office_id, upload_time
+      )
+    values (#{id,jdbcType=VARCHAR}, #{code,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
+      #{size,jdbcType=DOUBLE}, #{type,jdbcType=VARCHAR}, #{stufix,jdbcType=VARCHAR}, 
+      #{smallThumb,jdbcType=VARCHAR}, #{mediumThumb,jdbcType=VARCHAR}, #{largeThumb,jdbcType=VARCHAR}, 
+      #{smallSize,jdbcType=DOUBLE}, #{mediumSize,jdbcType=DOUBLE}, #{largeSize,jdbcType=DOUBLE}, 
+      #{folder,jdbcType=VARCHAR}, #{officeId,jdbcType=VARCHAR}, #{uploadTime,jdbcType=TIME}
+      )
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="Material">
+    update material
+    <set>
+      <if test="code != null">
+        code = #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="size != null">
+        size = #{size,jdbcType=DOUBLE},
+      </if>
+      <if test="type != null">
+        type = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="stufix != null">
+        stufix = #{stufix,jdbcType=VARCHAR},
+      </if>
+      <if test="smallThumb != null">
+        small_Thumb = #{smallThumb,jdbcType=VARCHAR},
+      </if>
+      <if test="mediumThumb != null">
+        medium_Thumb = #{mediumThumb,jdbcType=VARCHAR},
+      </if>
+      <if test="largeThumb != null">
+        large_Thumb = #{largeThumb,jdbcType=VARCHAR},
+      </if>
+      <if test="smallSize != null">
+        small_size = #{smallSize,jdbcType=DOUBLE},
+      </if>
+      <if test="mediumSize != null">
+        medium_size = #{mediumSize,jdbcType=DOUBLE},
+      </if>
+      <if test="largeSize != null">
+        large_size = #{largeSize,jdbcType=DOUBLE},
+      </if>
+      <if test="folder != null">
+        folder = #{folder,jdbcType=VARCHAR},
+      </if>
+      <if test="officeId != null">
+        office_id = #{officeId,jdbcType=VARCHAR},
+      </if>
+      <if test="uploadTime != null">
+        upload_time = #{uploadTime,jdbcType=TIME},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="update" parameterType="Material">
+    update material
+    set code = #{code,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      size = #{size,jdbcType=DOUBLE},
+      type = #{type,jdbcType=VARCHAR},
+      stufix = #{stufix,jdbcType=VARCHAR},
+      small_Thumb = #{smallThumb,jdbcType=VARCHAR},
+      medium_Thumb = #{mediumThumb,jdbcType=VARCHAR},
+      large_Thumb = #{largeThumb,jdbcType=VARCHAR},
+      small_size = #{smallSize,jdbcType=DOUBLE},
+      medium_size = #{mediumSize,jdbcType=DOUBLE},
+      large_size = #{largeSize,jdbcType=DOUBLE},
+      folder = #{folder,jdbcType=VARCHAR},
+      office_id = #{officeId,jdbcType=VARCHAR},
+      upload_time = #{uploadTime,jdbcType=TIME}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cn.ant.modules.sys.dao.RoleMapper" >
+  <resultMap id="RoleResultMap" type="Role" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="enname" property="enname" jdbcType="VARCHAR" />
+    <result column="role_type" property="roleType" jdbcType="VARCHAR" />
+    <result column="data_scope" property="dataScope" jdbcType="CHAR" />
+    <result column="create_by" property="createBy" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="update_by" property="updateBy" jdbcType="VARCHAR" />
+    <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+    <result column="remarks" property="remarks" jdbcType="VARCHAR" />
+    <result column="del_flag" property="delFlag" jdbcType="CHAR" />
+    <association property="office" javaType="Office">
+    	<id property="id" column="office_id"/>
+    </association>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, office_id, name, enname, role_type, data_scope, create_by, create_date, update_by, 
+    update_date, remarks, del_flag
+  </sql>
+  <select id="get" resultMap="RoleResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from sys_role
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  
+  <select id="find" resultMap="RoleResultMap" parameterType="map">
+  	select * from sys_role r
+  </select>
+  
+  <select id="findByName" resultMap="RoleResultMap" parameterType="string">
+  	select * from sys_role r where r.del_flag = '0' and r.name = #{name}
+  </select>
+  
+  <delete id="delete" parameterType="java.lang.String" >
+    delete from sys_role
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="Role" >
+    insert into sys_role (id, office_id, name, 
+      enname, role_type, data_scope, 
+      create_by, create_date, update_by, 
+      update_date, remarks, del_flag
+      )
+    values (#{id,jdbcType=VARCHAR}, #{office.id,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
+      #{enname,jdbcType=VARCHAR}, #{roleType,jdbcType=VARCHAR}, #{dataScope,jdbcType=CHAR}, 
+      #{createBy,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR}, 
+      #{updateDate,jdbcType=TIMESTAMP}, #{remarks,jdbcType=VARCHAR}, #{delFlag,jdbcType=CHAR}
+      )
+  </insert>
+  <update id="update" parameterType="Role" >
+    update sys_role
+    <set >
+      <if test="office != null" >
+        office_id = #{office.id,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="enname != null" >
+        enname = #{enname,jdbcType=VARCHAR},
+      </if>
+      <if test="roleType != null" >
+        role_type = #{roleType,jdbcType=VARCHAR},
+      </if>
+      <if test="dataScope != null" >
+        data_scope = #{dataScope,jdbcType=CHAR},
+      </if>
+      <if test="createBy != null" >
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        del_flag = #{delFlag,jdbcType=CHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

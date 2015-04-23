@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cn.ant.modules.product.dao.fruit.MaterialFolderMapper">
+  <resultMap id="BaseResultMap" type="MaterialFolder">
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="code" jdbcType="VARCHAR" property="code" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="office_id" jdbcType="VARCHAR" property="officeId" />
+    <association property="parent" javaType="MaterialFolder">
+    	<id property="id" column="parent_id"/>
+    	<result property="name" column="parent_name"/>
+    </association>
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, code, name, parent_id, office_id
+  </sql>
+  <select id="get" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />,
+    (select name from material_folder f where f.id = m.parent_id) parent_name
+    from material_folder m
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <!-- 查询种类 -->
+  <select id="query" resultMap="BaseResultMap" parameterType="String">
+  	select 
+    <include refid="Base_Column_List" />,
+    (select name from material_folder f where f.id = m.parent_id) parent_name
+    from material_folder m
+    where 1=1 
+    <if test=" officeId !=null and officeId !='' ">
+     AND (office_id = #{officeId,jdbcType=VARCHAR} or office_id = 0)
+    </if>
+  </select>
+  <delete id="delete" parameterType="java.lang.String">
+    delete from material_folder
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="MaterialFolder">
+    insert into material_folder (id, code, name, 
+      parent_id, office_id)
+    values (#{id,jdbcType=VARCHAR}, #{code,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
+      #{parent.id,jdbcType=VARCHAR}, #{officeId,jdbcType=VARCHAR})
+  </insert>
+  <update id="update" parameterType="MaterialFolder">
+    update material_folder
+    <set>
+      <if test="code != null">
+        code = #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="parent.id != null">
+        parent_id = #{parent.id,jdbcType=VARCHAR},
+      </if>
+      <if test="officeId != null">
+        office_id = #{officeId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cn.ant.modules.promotion.dao.logistics.LogisticsTemplateMapper" >
+  <resultMap id="BaseResultMap" type="LogisticsTemplate" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="address" property="address" jdbcType="VARCHAR" />
+    <result column="send_range" property="sendRange" jdbcType="VARCHAR" />
+    <result column="is_free" property="isFree" jdbcType="VARCHAR" />
+    <result column="fee" property="fee" jdbcType="DOUBLE" />
+    <result column="over_free" property="overFree" jdbcType="DOUBLE" />
+    <result column="status" property="status" jdbcType="VARCHAR" />
+    <association property="office" javaType="Office">
+    	<id property="id" column="office_id"/>
+    	<result property="name" column="office_name"/>
+    </association>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, name, address, send_range, is_free, fee, office_id, over_free
+  </sql>
+  <select id="get" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />,
+    (select name from sys_office o where o.id = t.office_id) office_name
+    from logistics_template t
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <!-- 查询 -->
+  <select id="query" resultMap="BaseResultMap" parameterType="map" >
+    select 
+    <include refid="Base_Column_List" />,
+    (select name from sys_office o where o.id = t.office_id) office_name
+    from logistics_template t
+  </select>
+  
+  <select id="count" resultType="int" parameterType="map">
+  	select count(1)
+    from logistics_template t
+  </select>
+  
+  <delete id="delete" parameterType="java.lang.String" >
+    delete from logistics_template
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="LogisticsTemplate" >
+    insert into logistics_template (id, name, address, 
+      send_range, is_free, fee, 
+      office_id, over_free,status,create_date)
+    values (#{id,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, 
+      #{sendRange,jdbcType=VARCHAR}, #{isFree,jdbcType=VARCHAR}, #{fee,jdbcType=DOUBLE}, 
+      #{office.id,jdbcType=VARCHAR}, #{overFree,jdbcType=DOUBLE},#{status,jdbcType=VARCHAR},
+      #{createDate,jdbcType=timestamp})
+  </insert>
+  <update id="update" parameterType="LogisticsTemplate" >
+    update logistics_template
+    <set >
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="sendRange != null" >
+        send_range = #{sendRange,jdbcType=VARCHAR},
+      </if>
+      <if test="isFree != null" >
+        is_free = #{isFree,jdbcType=VARCHAR},
+      </if>
+      <if test="fee != null" >
+        fee = #{fee,jdbcType=DOUBLE},
+      </if>
+      <if test="office != null" >
+        office_id = #{office.id,jdbcType=VARCHAR},
+      </if>
+      <if test="overFree != null" >
+        over_free = #{overFree,jdbcType=DOUBLE},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=DOUBLE},
+      </if>
+      <if test="overFree != null" >
+        create_date = sysdate(),
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

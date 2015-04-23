@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cn.ant.modules.sys.dao.CommunityInfoMapper">
+  <resultMap id="CommunityInfoResultMap" type="CommunityInfo">
+    <id column="ID" jdbcType="VARCHAR" property="id" />
+    <result column="code" jdbcType="VARCHAR" property="code" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="prov" jdbcType="VARCHAR" property="prov" />
+    <result column="city" jdbcType="VARCHAR" property="city" />
+    <result column="area" jdbcType="VARCHAR" property="area" />
+    <result column="address" jdbcType="VARCHAR" property="address" />
+    <result column="x" jdbcType="VARCHAR" property="x" />
+    <result column="y" jdbcType="VARCHAR" property="y" />
+    <result column="square" jdbcType="DOUBLE" property="square" />
+    <result column="create_by" property="createBy" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="update_by" property="updateBy" jdbcType="VARCHAR" />
+    <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+    <result column="remarks" property="remarks" jdbcType="VARCHAR" />
+    <result column="del_flag" property="delFlag" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, code, name, prov, city, area, address, x, y, square,create_by, create_date, update_by, update_date, 
+    remarks, del_flag
+  </sql>
+  <select id="get" parameterType="java.lang.String" resultMap="CommunityInfoResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from community_info
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  
+  <!-- 查询机构附近的小区 -->
+  <select id="findBySiteId" resultMap="CommunityInfoResultMap" parameterType="String">
+  
+  </select>
+  <!-- 查询小区信息 -->
+  <select id="query" resultMap="CommunityInfoResultMap" parameterType="Map">
+  	select <include refid="Base_Column_List"/> 
+  	from community_info
+  </select>
+  <delete id="delete" parameterType="java.lang.String">
+    delete from community_info
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="CommunityInfo">
+    insert into community_info (ID, code, name,prov, city, area, address,x, y, square, create_by, 
+      create_date, update_by, update_date, remarks, del_flag)
+    values (#{id,jdbcType=VARCHAR}, #{code,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
+      #{prov,jdbcType=VARCHAR}, #{city,jdbcType=VARCHAR}, #{area,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, 
+      #{x,jdbcType=VARCHAR}, #{y,jdbcType=VARCHAR}, #{square,jdbcType=DOUBLE},#{createBy,jdbcType=VARCHAR}, 
+      #{createDate,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR}, #{updateDate,jdbcType=TIMESTAMP}, 
+      #{remarks,jdbcType=VARCHAR}, #{delFlag,jdbcType=CHAR})
+  </insert>
+  <update id="update" parameterType="CommunityInfo">
+    update community_info
+    <set>
+      <if test="code != null">
+        code = #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="prov != null">
+        prov = #{prov,jdbcType=VARCHAR},
+      </if>
+      <if test="city != null">
+        city = #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="area != null">
+        area = #{area,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null">
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="x != null">
+        x = #{x,jdbcType=VARCHAR},
+      </if>
+      <if test="y != null">
+        y = #{y,jdbcType=VARCHAR},
+      </if>
+      <if test="square != null">
+        square = #{square,jdbcType=DOUBLE},
+      </if>
+      <if test="createBy != null" >
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        del_flag = #{delFlag,jdbcType=CHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

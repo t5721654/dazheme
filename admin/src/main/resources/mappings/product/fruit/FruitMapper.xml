@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cn.ant.modules.product.dao.fruit.FruitMapper" >
+  <resultMap id="BaseResultMap" type="Fruit" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="summary" property="summary" jdbcType="VARCHAR" />
+    <result column="brand" property="brand" jdbcType="VARCHAR" />
+    <result column="origin" property="origin" jdbcType="VARCHAR" />
+    <result column="unit" property="unit" jdbcType="VARCHAR" />
+    <result column="price" property="price" jdbcType="DOUBLE" />
+    <result column="number" property="number" jdbcType="DOUBLE" />
+    <result column="promotion_price" property="promotionPrice" jdbcType="DOUBLE" />
+    <result column="promotion_num" property="promotionNum" jdbcType="DOUBLE" />
+    <result column="discount" property="discount" jdbcType="DOUBLE" />
+    <result column="show_promotion" property="showPromotion" jdbcType="VARCHAR" />
+    <result column="weight" property="weight" jdbcType="DOUBLE" />
+    <result column="product_date" property="productDate" jdbcType="TIMESTAMP" />
+    <result column="shelf_life" property="shelfLife" jdbcType="INTEGER" />
+    <result column="packing_way" property="packingWay" jdbcType="VARCHAR" />
+    <result column="is_organic" property="isOrganic" jdbcType="VARCHAR" />
+    <result column="is_hot" property="isHot" jdbcType="VARCHAR" />
+    <result column="create_by" property="createBy" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="update_by" property="updateBy" jdbcType="VARCHAR" />
+    <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+    <result column="remarks" property="remarks" jdbcType="VARCHAR" />
+    <association property="category" javaType="FruitCategory">
+    	<id property="id" column="category_id"/>
+    	<result property="name" column="category_name"/>
+    </association>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, name, summary, brand, origin, category_id, unit, price, number, promotion_price, promotion_num, 
+    discount, show_promotion, weight, product_date, shelf_life, packing_way, is_organic, 
+    is_hot, create_by, create_date, update_by, update_date, remarks
+  </sql>
+  <select id="get" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />,
+    (select c.`name` from fruit_category c where c.id = f.category_id) category_name
+    from fruit f
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <!-- 查询水果 -->
+  <select id="query" resultMap="BaseResultMap" parameterType="map">
+  	SELECT 
+  	<include refid="Base_Column_List"/>,
+  	(select c.`name` from fruit_category c where c.ID = f.category_id) category_name
+  	FROM fruit f 
+  	where 1=1
+  </select>
+  
+  <!-- 统计总数 -->
+  <select id="queryCount" resultType="int" parameterType="map">
+  	select count(1) from fruit f 
+  	where 1=1
+  </select>
+  
+  <delete id="delete" parameterType="java.lang.String" >
+    delete from fruit
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="Fruit" >
+    insert into fruit (ID, name, summary, 
+      brand, origin, category_id, 
+      unit, price, number, 
+      promotion_price, promotion_num, discount, 
+      show_promotion, weight, product_date, 
+      shelf_life, packing_way, is_organic, 
+      is_hot, create_by, create_date, 
+      update_by, update_date, remarks
+      )
+    values (#{id,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{summary,jdbcType=VARCHAR}, 
+      #{brand,jdbcType=VARCHAR}, #{origin,jdbcType=VARCHAR}, #{category.id,jdbcType=VARCHAR}, 
+      #{unit,jdbcType=VARCHAR}, #{price,jdbcType=DOUBLE}, #{number,jdbcType=DOUBLE}, 
+      #{promotionPrice,jdbcType=DOUBLE}, #{promotionNum,jdbcType=DOUBLE}, #{discount,jdbcType=DOUBLE}, 
+      #{showPromotion,jdbcType=VARCHAR}, #{weight,jdbcType=DOUBLE}, #{productDate,jdbcType=TIMESTAMP}, 
+      #{shelfLife,jdbcType=INTEGER}, #{packingWay,jdbcType=VARCHAR}, #{isOrganic,jdbcType=VARCHAR}, 
+      #{isHot,jdbcType=VARCHAR}, #{createBy,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, 
+      #{updateBy,jdbcType=VARCHAR}, #{updateDate,jdbcType=TIMESTAMP}, #{remarks,jdbcType=VARCHAR}
+      )
+  </insert>
+  <update id="update" parameterType="Fruit" >
+    update fruit
+    <set >
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="summary != null" >
+        summary = #{summary,jdbcType=VARCHAR},
+      </if>
+      <if test="brand != null" >
+        brand = #{brand,jdbcType=VARCHAR},
+      </if>
+      <if test="origin != null" >
+        origin = #{origin,jdbcType=VARCHAR},
+      </if>
+      <if test="category != null" >
+        category_id = #{category.id,jdbcType=VARCHAR},
+      </if>
+      <if test="unit != null" >
+        unit = #{unit,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null" >
+        price = #{price,jdbcType=DOUBLE},
+      </if>
+      <if test="number != null" >
+        number = #{number,jdbcType=DOUBLE},
+      </if>
+      <if test="promotionPrice != null" >
+        promotion_price = #{promotionPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="promotionNum != null" >
+        promotion_num = #{promotionNum,jdbcType=DOUBLE},
+      </if>
+      <if test="discount != null" >
+        discount = #{discount,jdbcType=DOUBLE},
+      </if>
+      <if test="showPromotion != null" >
+        show_promotion = #{showPromotion,jdbcType=VARCHAR},
+      </if>
+      <if test="weight != null" >
+        weight = #{weight,jdbcType=DOUBLE},
+      </if>
+      <if test="productDate != null" >
+        product_date = #{productDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="shelfLife != null" >
+        shelf_life = #{shelfLife,jdbcType=INTEGER},
+      </if>
+      <if test="packingWay != null" >
+        packing_way = #{packingWay,jdbcType=VARCHAR},
+      </if>
+      <if test="isOrganic != null" >
+        is_organic = #{isOrganic,jdbcType=VARCHAR},
+      </if>
+      <if test="isHot != null" >
+        is_hot = #{isHot,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null" >
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cn.ant.modules.customer.dao.CustomerInfoMapper">
+    <resultMap id="BaseResultMap" type="CustomerInfo">
+        <id column="userId" property="userId" jdbcType="VARCHAR"/>
+        <result column="login_name" property="loginName" jdbcType="VARCHAR"/>
+        <result column="password" property="password" jdbcType="VARCHAR"/>
+        <result column="sex" property="sex" jdbcType="VARCHAR"/>
+        <result column="birthday" property="birthday" jdbcType="VARCHAR"/>
+        <result column="age" property="age" jdbcType="INTEGER"/>
+        <result column="mobile" property="mobile" jdbcType="VARCHAR"/>
+        <result column="Email" property="email" jdbcType="VARCHAR"/>
+        <result column="type" property="type" jdbcType="VARCHAR"/>
+        <result column="last_login_time" property="lastLoginTime" jdbcType="TIME"/>
+        <result column="visit_count" property="visitCount" jdbcType="INTEGER"/>
+        <result column="user_points" property="userPoints" jdbcType="INTEGER"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        userId, login_name, password, sex, birthday, age, mobile, Email, type, last_login_time,
+        visit_count, user_points
+    </sql>
+    <select id="get" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from customer_info
+        where userId = #{userId,jdbcType=VARCHAR}
+    </select>
+    <!-- 查询客户 -->
+    <select id="query" resultMap="BaseResultMap" parameterType="map">
+        select
+        <include refid="Base_Column_List"/>
+        from customer_info
+    </select>
+    <!-- 查询客户总数 -->
+    <select id="count" resultType="int" parameterType="map">
+        select count(1)
+        from customer_info
+    </select>
+
+    <!--判断手机号是否存在-->
+    <select id="findByMobile" resultMap="BaseResultMap" parameterType="string">
+        select
+        <include refid="Base_Column_List"/>
+        from customer_info c where c.mobile = #{mobile}
+    </select>
+
+    <!--根据登录名成查询-->
+    <select id="findByLoginName" resultMap="BaseResultMap" parameterType="string">
+        select
+        <include refid="Base_Column_List"/>
+        from customer_info c where c.login_name = #{loginName}
+    </select>
+
+    <!--用户登录-->
+    <select id="findByLogin" parameterType="map">
+        select
+        <include refid="Base_Column_List"/>
+        from customer_info c where c.login_name = #{loginName} and c.`password` = #{password}
+    </select>
+
+    <delete id="delete" parameterType="java.lang.String">
+        delete from customer_info
+        where userId = #{userId,jdbcType=VARCHAR}
+    </delete>
+    <insert id="insert" parameterType="CustomerInfo">
+        insert into customer_info (userId, login_name, password,
+        sex, birthday, age,
+        mobile, Email, type,
+        last_login_time, visit_count, user_points
+        )
+        values (#{userId,jdbcType=VARCHAR}, #{loginName,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR},
+        #{sex,jdbcType=VARCHAR}, #{birthday,jdbcType=VARCHAR}, #{age,jdbcType=INTEGER},
+        #{mobile,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR},
+        #{lastLoginTime,jdbcType=TIME}, #{visitCount,jdbcType=INTEGER}, #{userPoints,jdbcType=INTEGER}
+        )
+    </insert>
+    <update id="update" parameterType="CustomerInfo">
+        update customer_info
+        <set>
+            <if test="loginName != null">
+                login_name = #{loginName,jdbcType=VARCHAR},
+            </if>
+            <if test="password != null">
+                password = #{password,jdbcType=VARCHAR},
+            </if>
+            <if test="sex != null">
+                sex = #{sex,jdbcType=VARCHAR},
+            </if>
+            <if test="birthday != null">
+                birthday = #{birthday,jdbcType=VARCHAR},
+            </if>
+            <if test="age != null">
+                age = #{age,jdbcType=INTEGER},
+            </if>
+            <if test="mobile != null">
+                mobile = #{mobile,jdbcType=VARCHAR},
+            </if>
+            <if test="email != null">
+                Email = #{email,jdbcType=VARCHAR},
+            </if>
+            <if test="type != null">
+                type = #{type,jdbcType=VARCHAR},
+            </if>
+            <if test="lastLoginTime != null">
+                last_login_time = #{lastLoginTime,jdbcType=TIME},
+            </if>
+            <if test="visitCount != null">
+                visit_count = #{visitCount,jdbcType=INTEGER},
+            </if>
+            <if test="userPoints != null">
+                user_points = #{userPoints,jdbcType=INTEGER},
+            </if>
+        </set>
+        where userId = #{userId,jdbcType=VARCHAR}
+    </update>
+
+    <!--修改手机号码-->
+    <update id="updateMobile" parameterType="map">
+        update customer_info set mobile = #{mobile} where userId = #{userId} and login_name = #{loginName}
+    </update>
+
+    <!--更改用户密码-->
+    <update id="updatePassword" parameterType="map">
+        update customer_info set `password` = #{password} where userId = #{userId} and login_name = #{loginName}
+    </update>
+</mapper>

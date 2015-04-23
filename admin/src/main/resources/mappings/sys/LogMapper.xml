@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cn.ant.modules.sys.dao.LogMapper" >
+  <resultMap id="LogResultMap" type="Log" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="type" property="type" jdbcType="CHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="remote_addr" property="remoteAddr" jdbcType="VARCHAR" />
+    <result column="user_agent" property="userAgent" jdbcType="VARCHAR" />
+    <result column="request_uri" property="requestUri" jdbcType="VARCHAR" />
+    <result column="method" property="method" jdbcType="VARCHAR" />
+    <result column="params" property="params" jdbcType="LONGVARCHAR" />
+    <result column="exception" property="exception" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, type, create_by, create_date, remote_addr, user_agent, request_uri, method,params, exception
+  </sql>
+  <select id="get" resultMap="LogResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from sys_log
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <select id="find" resultMap="LogResultMap">
+  	select * from sys_log
+  </select>
+  <delete id="delete" parameterType="java.lang.Long" >
+    delete from sys_log
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="Log" >
+    insert into sys_log (id, type, create_by, 
+      create_date, remote_addr, user_agent, 
+      request_uri, method, params, 
+      exception)
+    values (#{id,jdbcType=BIGINT}, #{type,jdbcType=CHAR}, #{createBy.id,jdbcType=BIGINT}, 
+      #{createDate,jdbcType=TIMESTAMP}, #{remoteAddr,jdbcType=VARCHAR}, #{userAgent,jdbcType=VARCHAR}, 
+      #{requestUri,jdbcType=VARCHAR}, #{method,jdbcType=VARCHAR}, #{params,jdbcType=LONGVARCHAR}, 
+      #{exception,jdbcType=LONGVARCHAR})
+  </insert>
+  <update id="update" parameterType="Log" >
+    update sys_log
+    <set >
+      <if test="type != null" >
+        type = #{type,jdbcType=CHAR},
+      </if>
+      <if test="createBy != null" >
+        create_by = #{createBy.id,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remoteAddr != null" >
+        remote_addr = #{remoteAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="userAgent != null" >
+        user_agent = #{userAgent,jdbcType=VARCHAR},
+      </if>
+      <if test="requestUri != null" >
+        request_uri = #{requestUri,jdbcType=VARCHAR},
+      </if>
+      <if test="method != null" >
+        method = #{method,jdbcType=VARCHAR},
+      </if>
+      <if test="params != null" >
+        params = #{params,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="exception != null" >
+        exception = #{exception,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>
