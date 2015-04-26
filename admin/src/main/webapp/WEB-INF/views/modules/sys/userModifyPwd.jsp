@@ -31,34 +31,39 @@
 	</script>
 </head>
 <body>
-	<ul class="nav nav-tabs">
-		<li><a href="${ctx}/sys/user/info">个人信息</a></li>
-		<li class="active"><a href="${ctx}/sys/user/modifyPwd">修改密码</a></li>
-	</ul><br/>
-	<form:form id="inputForm" modelAttribute="user" action="${ctx}/sys/user/modifyPwd" method="post" class="form-horizontal">
-		<form:hidden path="id"/>
-		<tags:message content="${message}"/>
-		<div class="control-group">
-			<label class="control-label">旧密码:</label>
-			<div class="controls">
-				<input id="oldPassword" name="oldPassword" type="password" value="" maxlength="50" minlength="3" class="required"/>
-			</div>
+<div class="row-fluid">
+	<div class="portlet box dark">
+		<div class="portlet-title">
+			<div class="caption">修改密码</div>
 		</div>
-		<div class="control-group">
-			<label class="control-label">新密码:</label>
-			<div class="controls">
-				<input id="newPassword" name="newPassword" type="password" value="" maxlength="50" minlength="3" class="required"/>
-			</div>
+		<div class="portlet-body">
+			<form:form id="inputForm" modelAttribute="user" action="${ctx}/sys/user/modifyPwd" method="post" class="form-horizontal">
+				<form:hidden path="id"/>
+				<tags:message content="${message}"/>
+				<div class="control-group">
+					<label class="control-label">旧密码:</label>
+					<div class="controls">
+						<input id="oldPassword" name="oldPassword" type="password" value="" maxlength="50" minlength="3" class="required"/>
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label">新密码:</label>
+					<div class="controls">
+						<input id="newPassword" name="newPassword" type="password" value="" maxlength="50" minlength="3" class="required"/>
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label">确认新密码:</label>
+					<div class="controls">
+						<input id="confirmNewPassword" name="confirmNewPassword" type="password" value="" maxlength="50" minlength="3" class="required" equalTo="#newPassword"/>
+					</div>
+				</div>
+				<div class="form-actions">
+					<input id="btnSubmit" class="btn btn-primary" type="submit" value="保 存"/>
+				</div>
+			</form:form>
 		</div>
-		<div class="control-group">
-			<label class="control-label">确认新密码:</label>
-			<div class="controls">
-				<input id="confirmNewPassword" name="confirmNewPassword" type="password" value="" maxlength="50" minlength="3" class="required" equalTo="#newPassword"/>
-			</div>
-		</div>
-		<div class="form-actions">
-			<input id="btnSubmit" class="btn btn-primary" type="submit" value="保 存"/>
-		</div>
-	</form:form>
+	</div>
+</div>
 </body>
 </html>

@@ -30,12 +30,5 @@
 		<typeAlias alias="Log" type="com.cn.ant.modules.sys.entity.Log"/>
 		<typeAlias alias="Area" type="com.cn.ant.modules.sys.entity.Area"/>
 		<typeAlias alias="CommunityInfo" type="com.cn.ant.modules.sys.entity.CommunityInfo"/>
-		<typeAlias alias="FruitCategory" type="com.cn.ant.modules.product.entity.fruit.FruitCategory"/>
-		<typeAlias alias="Fruit" type="com.cn.ant.modules.product.entity.fruit.Fruit"/>
-		<typeAlias alias="MaterialFolder" type="com.cn.ant.modules.product.entity.fruit.MaterialFolder"/>
-		<typeAlias alias="Material" type="com.cn.ant.modules.product.entity.fruit.Material"/>
-		<typeAlias alias="Coupon" type="com.cn.ant.modules.promotion.entity.coupon.Coupon"/>
-		<typeAlias alias="LogisticsTemplate" type="com.cn.ant.modules.promotion.entity.logistics.LogisticsTemplate"/>
-		<typeAlias alias="CustomerInfo" type="com.cn.ant.modules.customer.entity.CustomerInfo"/>
 	</typeAliases>
 </configuration>
