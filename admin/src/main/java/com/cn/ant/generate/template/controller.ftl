@@ -51,7 +51,7 @@ public class ${ClassName}Controller extends BaseController {
 		if (!user.isAdmin()){
 			${className}.setCreateBy(user);
 		}
-        Page<${ClassName}> page = ${className}Service.find(new Page<${ClassName}>(request, response), ${className}); 
+        Page<${ClassName}> page = ${className}Service.find(WebUtils.initPage(request, response), ${className});
         model.addAttribute("page", page);
 		return "${viewPrefix}List";
 	}

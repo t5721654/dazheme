@@ -5,12 +5,6 @@
  */
 package com.cn.ant.common.persistence;
 
-import com.cn.ant.common.config.Global;
-import com.cn.ant.common.utils.CookieUtils;
-import org.apache.commons.lang3.StringUtils;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,8 +18,8 @@ import java.util.List;
 public class Page<T> {
 
 	private int pageNo = 1; // 当前页码
-	private int pageSize = Integer.valueOf(Global.getConfig("page.pageSize")); // 页面大小，设置为“-1”表示不进行分页（分页无效）
-
+	private int pageSize = 20;
+	private PageEntity pageParam;
 	private long count;// 总记录数，设置为“-1”表示不查询总数
 
 	private int first;// 首页索引
@@ -47,59 +41,10 @@ public class Page<T> {
 
 	private String message = ""; // 设置提示消息，显示在“共n条”之后
 
-	/**
-	 * 构造方法
-	 * 
-	 * @param request
-	 *            传递 repage 参数，来记住页码
-	 * @param response
-	 *            用于设置 Cookie，记住页码
-	 */
-	public Page(HttpServletRequest request, HttpServletResponse response) {
-		this(request, response, -2);
-	}
-
-	/**
-	 * 构造方法
-	 * 
-	 * @param request
-	 *            传递 repage 参数，来记住页码
-	 * @param response
-	 *            用于设置 Cookie，记住页码
-	 * @param pageSize
-	 *            分页大小，如果传递 -1 则为不分页，返回所有数据
-	 */
-	public Page(HttpServletRequest request, HttpServletResponse response, int pageSize) {
-		// 设置页码参数（传递repage参数，来记住页码）
-		String no = request.getParameter("pageNo");
-		if (StringUtils.isNumeric(no)) {
-			CookieUtils.setCookie(response, "pageNo", no);
-			this.setPageNo(Integer.parseInt(no));
-		} else if (request.getParameter("repage") != null) {
-			no = CookieUtils.getCookie(request, "pageNo");
-			if (StringUtils.isNumeric(no)) {
-				this.setPageNo(Integer.parseInt(no));
-			}
-		}
-		// 设置页面大小参数（传递repage参数，来记住页码大小）
-		String size = request.getParameter("pageSize");
-		if (StringUtils.isNumeric(size)) {
-			CookieUtils.setCookie(response, "pageSize", size);
-			this.setPageSize(Integer.parseInt(size));
-		} else if (request.getParameter("repage") != null) {
-			no = CookieUtils.getCookie(request, "pageSize");
-			if (StringUtils.isNumeric(size)) {
-				this.setPageSize(Integer.parseInt(size));
-			}
-		}
-		if (pageSize != -2) {
-			this.pageSize = pageSize;
-		}
-		// 设置排序参数
-		String orderBy = request.getParameter("orderBy");
-		if (StringUtils.isNotBlank(orderBy)) {
-			this.setOrderBy(orderBy);
-		}
+	public Page(PageEntity pageParam) {
+		this.pageNo = pageParam.getPageNo();
+		this.pageSize = pageParam.getPageSize();
+		this.orderBy = pageParam.getOrderColumn() + pageParam.getOrderTurn();
 	}
 
 	/**

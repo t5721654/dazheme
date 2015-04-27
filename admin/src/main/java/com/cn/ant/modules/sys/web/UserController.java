@@ -1,31 +1,11 @@
 package com.cn.ant.modules.sys.web;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.validation.ConstraintViolationException;
-
-import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.apache.shiro.authz.annotation.RequiresUser;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
 import com.cn.ant.common.beanvalidator.BeanValidators;
 import com.cn.ant.common.config.Global;
 import com.cn.ant.common.persistence.Page;
 import com.cn.ant.common.utils.DateUtils;
 import com.cn.ant.common.utils.StringUtils;
+import com.cn.ant.common.utils.WebUtils;
 import com.cn.ant.common.utils.excel.ExportExcel;
 import com.cn.ant.common.utils.excel.ImportExcel;
 import com.cn.ant.common.web.BaseController;
@@ -35,6 +15,21 @@ import com.cn.ant.modules.sys.entity.User;
 import com.cn.ant.modules.sys.service.SystemService;
 import com.cn.ant.modules.sys.utils.UserUtils;
 import com.google.common.collect.Lists;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.apache.shiro.authz.annotation.RequiresUser;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.validation.ConstraintViolationException;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 用户Controller
@@ -70,7 +65,7 @@ public class UserController extends BaseController {
 		}
 		params.put("loginName", user.getLoginName());
 		params.put("name", user.getName());
-		Page<User> page = systemService.findUser(new Page<User>(request, response), params);
+		Page<User> page = systemService.findUser(WebUtils.initPage(request, response), params);
         model.addAttribute("page", page);
 		return "modules/sys/userList";
 	}
@@ -153,7 +148,7 @@ public class UserController extends BaseController {
 		try {
 			String fileName = "用户数据" + DateUtils.getDate("yyyyMMddHHmmss") + ".xlsx";
 			Map<String, Object> params = new HashMap<String, Object>();
-			Page<User> page = systemService.findUser(new Page<User>(request, response, -1), params);
+			Page<User> page = systemService.findUser(WebUtils.initPage(request, response, -1), params);
 			new ExportExcel("用户数据", User.class).setDataList(page.getList()).write(response, fileName).dispose();
     		return null;
 		} catch (Exception e) {

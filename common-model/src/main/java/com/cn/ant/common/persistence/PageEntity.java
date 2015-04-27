@@ -3,9 +3,10 @@ package com.cn.ant.common.persistence;
 import java.util.Map;
 
 public class PageEntity {
-    private Integer page; //目前是第几页  
-    private Integer size; //每页大小  
-    private Map<String, Object> params; //传入的参�? 
+
+    private Integer pageNo; //目前是第几页
+    private Integer pageSize; //每页大小
+    private Map<String, Object> params; //传入的参数
     private String orderColumn;
     private String orderTurn = "ASC";
 
@@ -25,20 +26,20 @@ public class PageEntity {
         this.orderTurn = orderTurn;
     }
 
-    public Integer getPage() {
-        return page;
+    public Integer getPageNo() {
+        return pageNo;
     }
 
-    public void setPage(Integer page) {
-        this.page = page;
+    public void setPageNo(Integer pageNo) {
+        this.pageNo = pageNo;
     }
 
-    public Integer getSize() {
-        return size;
+    public Integer getPageSize() {
+        return pageSize;
     }
 
-    public void setSize(Integer size) {
-        this.size = size;
+    public void setPageSize(Integer pageSize) {
+        this.pageSize = pageSize;
     }
 
     public Map<String, Object> getParams() {

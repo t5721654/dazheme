@@ -5,11 +5,11 @@
  */
 package com.cn.ant.modules.sys.web;
 
-import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
+import com.cn.ant.common.persistence.Page;
+import com.cn.ant.common.utils.WebUtils;
+import com.cn.ant.common.web.BaseController;
+import com.cn.ant.modules.sys.entity.Log;
+import com.cn.ant.modules.sys.service.LogService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,10 +17,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.cn.ant.common.persistence.Page;
-import com.cn.ant.common.web.BaseController;
-import com.cn.ant.modules.sys.entity.Log;
-import com.cn.ant.modules.sys.service.LogService;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.util.Map;
 
 /**
  * 日志Controller
@@ -37,7 +36,7 @@ public class LogController extends BaseController {
 	@RequiresPermissions("sys:log:view")
 	@RequestMapping(value = {"list", ""})
 	public String list(@RequestParam Map<String, Object> paramMap, HttpServletRequest request, HttpServletResponse response, Model model) {
-        Page<Log> page = logService.find(new Page<Log>(request, response), paramMap); 
+        Page<Log> page = logService.find(WebUtils.initPage(request, response), paramMap);
         model.addAttribute("page", page);
         model.addAllAttributes(paramMap);
 		return "modules/sys/logList";

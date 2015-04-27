@@ -5,11 +5,13 @@
  */
 package com.cn.ant.modules.sys.web;
 
-import java.util.List;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
+import com.cn.ant.common.config.Global;
+import com.cn.ant.common.persistence.Page;
+import com.cn.ant.common.utils.Identities;
+import com.cn.ant.common.utils.WebUtils;
+import com.cn.ant.common.web.BaseController;
+import com.cn.ant.modules.sys.entity.Dict;
+import com.cn.ant.modules.sys.service.DictService;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,12 +22,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.cn.ant.common.config.Global;
-import com.cn.ant.common.persistence.Page;
-import com.cn.ant.common.utils.Identities;
-import com.cn.ant.common.web.BaseController;
-import com.cn.ant.modules.sys.entity.Dict;
-import com.cn.ant.modules.sys.service.DictService;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 
 /**
  * 字典Controller
@@ -72,7 +71,7 @@ public class DictController extends BaseController {
         Dict dict = new Dict();
         String type = request.getParameter("type");
         dict.setType(type);
-        Page<Dict> page = dictService.find(new Page<Dict>(request, response), dict);
+        Page<Dict> page = dictService.find(WebUtils.initPage(request, response), dict);
         model.addAttribute("page", page);
         return "modules/sys/dictItemList";
     }
