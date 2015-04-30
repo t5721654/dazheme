@@ -5,16 +5,6 @@
  */
 package com.cn.ant.modules.sys.service;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import org.apache.commons.lang3.StringUtils;
-import org.apache.shiro.SecurityUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import com.cn.ant.common.persistence.Page;
 import com.cn.ant.common.security.Digests;
 import com.cn.ant.common.service.BaseService;
@@ -29,6 +19,15 @@ import com.cn.ant.modules.sys.entity.Role;
 import com.cn.ant.modules.sys.entity.User;
 import com.cn.ant.modules.sys.security.SystemAuthorizingRealm;
 import com.cn.ant.modules.sys.utils.UserUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.shiro.SecurityUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 系统管理，安全相关实体的管理类,包括用户、角色、菜单.
@@ -81,10 +80,8 @@ public class SystemService extends BaseService {
 	public void saveUser(User user) {
 		if (StringUtils.isBlank(user.getId())) {
 			user.setId(Identities.generateUUID());
-			user.prePersist();
 			userMapper.insert(user);
 		} else {
-			user.preUpdate();
 			userMapper.update(user);
 		}
 		systemRealm.clearAllCachedAuthorizationInfo();
@@ -154,10 +151,8 @@ public class SystemService extends BaseService {
 	public void saveRole(Role role) {
 		if (StringUtils.isBlank(role.getId())) {
 			role.setId(Identities.generateUUID());
-			role.prePersist();
 			roleMapper.insert(role);
 		} else {
-			role.preUpdate();
 			roleMapper.update(role);
 		}
 		systemRealm.clearAllCachedAuthorizationInfo();
@@ -213,10 +208,8 @@ public class SystemService extends BaseService {
 		menu.setParentIds(menu.getParent().getParentIds()+menu.getParent().getId()+",");
 		if (StringUtils.isBlank(menu.getId())) {
 			menu.setId(Identities.generateUUID());
-			menu.prePersist();
 			menuMapper.insert(menu);
 		} else {
-			menu.preUpdate();
 			menuMapper.update(menu);
 		}
 		// 更新子节点 parentIds

@@ -22,12 +22,6 @@
 
 	<!-- 类别名 -->
 	<typeAliases>
-		<typeAlias alias="User" type="com.cn.ant.modules.sys.entity.User"/>
-		<typeAlias alias="Office" type="com.cn.ant.modules.sys.entity.Office"/>
-		<typeAlias alias="Role" type="com.cn.ant.modules.sys.entity.Role"/>
-		<typeAlias alias="Menu" type="com.cn.ant.modules.sys.entity.Menu"/>
-		<typeAlias alias="Dict" type="com.cn.ant.modules.sys.entity.Dict"/>
-		<typeAlias alias="Log" type="com.cn.ant.modules.sys.entity.Log"/>
-		<typeAlias alias="Area" type="com.cn.ant.modules.sys.entity.Area"/>
+		<typeAlias alias="CommunityInfo" type="com.cn.ant.model.CommunityInfo"/>
 	</typeAliases>
 </configuration>

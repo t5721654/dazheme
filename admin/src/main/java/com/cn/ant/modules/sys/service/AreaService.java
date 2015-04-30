@@ -5,18 +5,17 @@
  */
 package com.cn.ant.modules.sys.service;
 
-import java.util.List;
-
-import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import com.cn.ant.common.service.BaseService;
 import com.cn.ant.common.utils.Identities;
 import com.cn.ant.modules.sys.dao.AreaMapper;
 import com.cn.ant.modules.sys.entity.Area;
 import com.cn.ant.modules.sys.utils.UserUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 /**
  * 区域Service
@@ -46,10 +45,8 @@ public class AreaService extends BaseService {
 		area.setParentIds(area.getParent().getParentIds()+area.getParent().getId()+",");
 		if (StringUtils.isBlank(area.getId())) {
 			area.setId(Identities.generateUUID());
-			area.prePersist();
 			mapper.insert(area);
 		} else {
-			area.preUpdate();
 			mapper.update(area);
 		}
 		// 更新子节点 parentIds

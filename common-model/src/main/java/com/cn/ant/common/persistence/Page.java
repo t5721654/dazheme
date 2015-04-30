@@ -5,6 +5,7 @@
  */
 package com.cn.ant.common.persistence;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,7 +16,7 @@ import java.util.List;
  * @version 2013-7-2
  * @param <T>
  */
-public class Page<T> {
+public class Page<T> implements Serializable{
 
 	private int pageNo = 1; // 当前页码
 	private int pageSize = 20;
@@ -41,6 +42,10 @@ public class Page<T> {
 
 	private String message = ""; // 设置提示消息，显示在“共n条”之后
 
+	public Page(){
+		super();
+	}
+
 	public Page(PageEntity pageParam) {
 		this.pageNo = pageParam.getPageNo();
 		this.pageSize = pageParam.getPageSize();
@@ -56,7 +61,7 @@ public class Page<T> {
 	 *            分页大小
 	 */
 	public Page(int pageNo, int pageSize) {
-		this(pageNo, pageSize, 0);
+		this(pageNo, pageSize, 0L);
 	}
 
 	/**

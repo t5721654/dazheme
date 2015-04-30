@@ -5,12 +5,15 @@
  */
 package com.cn.ant.modules.sys.web;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import javax.servlet.http.HttpServletResponse;
-
+import com.cn.ant.common.config.Global;
+import com.cn.ant.common.utils.Identities;
+import com.cn.ant.common.web.BaseController;
+import com.cn.ant.modules.sys.entity.Office;
+import com.cn.ant.modules.sys.entity.User;
+import com.cn.ant.modules.sys.service.OfficeService;
+import com.cn.ant.modules.sys.utils.UserUtils;
+import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.authz.annotation.RequiresUser;
@@ -23,15 +26,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.cn.ant.common.config.Global;
-import com.cn.ant.common.utils.Identities;
-import com.cn.ant.common.web.BaseController;
-import com.cn.ant.modules.sys.entity.Office;
-import com.cn.ant.modules.sys.entity.User;
-import com.cn.ant.modules.sys.service.OfficeService;
-import com.cn.ant.modules.sys.utils.UserUtils;
-import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
+import javax.servlet.http.HttpServletResponse;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 机构Controller
@@ -99,11 +97,9 @@ public class OfficeController extends BaseController {
 				msg = "数据校验失败,请重试!";
 			}
 			if (StringUtils.isNotBlank(office.getId())) {
-				office.preUpdate();
 				officeService.update(office);
 			} else {
 				office.setId(Identities.generateUUID());
-				office.prePersist();
 				officeService.save(office);
 			}
 		} catch (Exception e) {

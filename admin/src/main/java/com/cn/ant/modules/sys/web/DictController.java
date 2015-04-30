@@ -93,10 +93,8 @@ public class DictController extends BaseController {
 		}
 		if (StringUtils.isBlank(dict.getId())) {
 			dict.setId(Identities.generateUUID());
-			dict.prePersist();
 			dictService.save(dict);
 		} else {
-			dict.preUpdate();
 			dictService.update(dict);
 		}
 		addMessage(redirectAttributes, "保存字典'" + dict.getLabel() + "'成功");

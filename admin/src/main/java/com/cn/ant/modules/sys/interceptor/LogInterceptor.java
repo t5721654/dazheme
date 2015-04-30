@@ -5,14 +5,6 @@
  */
 package com.cn.ant.modules.sys.interceptor;
 
-import java.util.Date;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import org.springframework.web.servlet.HandlerInterceptor;
-import org.springframework.web.servlet.ModelAndView;
-
 import com.cn.ant.common.config.Global;
 import com.cn.ant.common.service.BaseService;
 import com.cn.ant.common.utils.SpringContextHolder;
@@ -21,6 +13,12 @@ import com.cn.ant.modules.sys.dao.LogMapper;
 import com.cn.ant.modules.sys.entity.Log;
 import com.cn.ant.modules.sys.entity.User;
 import com.cn.ant.modules.sys.utils.UserUtils;
+import org.springframework.web.servlet.HandlerInterceptor;
+import org.springframework.web.servlet.ModelAndView;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.util.Date;
 
 /**
  * 系统拦截器
@@ -69,7 +67,7 @@ public class LogInterceptor extends BaseService implements HandlerInterceptor {
 				log.setType(ex == null ? Log.TYPE_ACCESS : Log.TYPE_EXCEPTION);
 				log.setCreateBy(user);
 				log.setCreateDate(new Date());
-				log.setRemoteAddr(StringUtils.getRemoteAddr(request));
+				log.setRemoteAddr(request.getRemoteAddr());
 				log.setUserAgent(request.getHeader("user-agent"));
 				log.setRequestUri(request.getRequestURI());
 				log.setMethod(request.getMethod());

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.cn.ant.modules.sys.dao.CommunityInfoMapper">
+<mapper namespace="com.cn.ant.modules.community.mapper.CommunityInfoMapper">
   <resultMap id="CommunityInfoResultMap" type="CommunityInfo">
     <id column="ID" jdbcType="VARCHAR" property="id" />
     <result column="code" jdbcType="VARCHAR" property="code" />
@@ -32,7 +32,9 @@
   
   <!-- 查询机构附近的小区 -->
   <select id="findBySiteId" resultMap="CommunityInfoResultMap" parameterType="String">
-  
+    select
+    <include refid="Base_Column_List" />
+    from community_info
   </select>
   <!-- 查询小区信息 -->
   <select id="query" resultMap="CommunityInfoResultMap" parameterType="Map">

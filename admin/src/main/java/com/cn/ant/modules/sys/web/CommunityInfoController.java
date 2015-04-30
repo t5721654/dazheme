@@ -6,10 +6,10 @@ import com.cn.ant.common.utils.Identities;
 import com.cn.ant.common.utils.StringUtils;
 import com.cn.ant.common.utils.WebUtils;
 import com.cn.ant.common.web.BaseController;
-import com.cn.ant.modules.sys.entity.CommunityInfo;
+import com.cn.ant.interfaces.ICommunityInfoService;
+import com.cn.ant.model.CommunityInfo;
 import com.cn.ant.modules.sys.entity.Office;
 import com.cn.ant.modules.sys.entity.User;
-import com.cn.ant.modules.sys.service.CommunityInfoService;
 import com.cn.ant.modules.sys.service.OfficeService;
 import com.cn.ant.modules.sys.utils.UserUtils;
 import com.google.common.collect.Lists;
@@ -39,7 +39,7 @@ import java.util.Map;
 public class CommunityInfoController extends BaseController {
 
 	@Autowired
-	private CommunityInfoService communityInfoService;
+	private ICommunityInfoService communityInfoService;
 	@Autowired
 	private OfficeService officeService;
 
@@ -58,7 +58,11 @@ public class CommunityInfoController extends BaseController {
 		User user = UserUtils.getUser();
 		communityInfo.setCreateBy(user.getId());
 		Map<String, Object> params = new HashMap<String, Object>();
-		Page<CommunityInfo> page = communityInfoService.find(WebUtils.initPage(request, response), params);
+		//List<CommunityInfo> communityInfoList = communityInfoService.findBySiteId(user.getOffice().getId());
+		//Page<CommunityInfo> page = WebUtils.initPage(request, response);
+		Page<CommunityInfo> page = WebUtils.initPage(request, response);
+		page = communityInfoService.find(page, params);
+		//page.setList(communityInfoList);
 		model.addAttribute("page", page);
 		return "modules/sys/communityInfoList";
 	}
@@ -80,10 +84,8 @@ public class CommunityInfoController extends BaseController {
 		try {
 			if (StringUtils.isBlank(communityInfo.getId())) {
 				communityInfo.setId(Identities.generateUUID());
-				communityInfo.prePersist();
 				communityInfoService.save(communityInfo);
 			} else {
-				communityInfo.preUpdate();
 				communityInfoService.update(communityInfo);
 			}
 		} catch (Exception e) {

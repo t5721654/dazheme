@@ -67,6 +67,9 @@
 		<property name="configLocation" value="classpath:${ehcache.configFile}" />
 	</bean>
 
+	<!-- 引入dubbo配置文件-->
+	<import resource="spring-consumer.xml"/>
+
 	<!-- Production 环境 -->
  	<beans profile="production">
  	    <!-- 数据源配置, 使用 BoneCP 数据库连接池 -->
@@ -103,7 +106,8 @@
 			<property name="maxPoolPreparedStatementPerConnectionSize" value="20" /> -->
 			
 			<!-- 配置监控统计拦截的filters -->
-		    <property name="filters" value="stat" /> 
+		    <property name="filters" value="stat" />
 		</bean>
 	</beans>
+
 </beans>

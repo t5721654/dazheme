@@ -1,12 +1,12 @@
-package com.cn.ant.modules.sys.dao;
+package com.cn.ant.modules.community.mapper;
+
+import com.cn.ant.common.persistence.MyBatisRepository;
+import com.cn.ant.model.CommunityInfo;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 import java.util.Map;
 
-import org.apache.ibatis.annotations.Param;
-
-import com.cn.ant.common.persistence.MyBatisRepository;
-import com.cn.ant.modules.sys.entity.CommunityInfo;
 @MyBatisRepository
 public interface CommunityInfoMapper {
 
