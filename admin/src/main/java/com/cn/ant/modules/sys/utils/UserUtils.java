@@ -5,29 +5,20 @@
  */
 package com.cn.ant.modules.sys.utils;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
+import com.cn.ant.common.service.BaseService;
+import com.cn.ant.common.utils.SpringContextHolder;
+import com.cn.ant.modules.sys.dao.*;
+import com.cn.ant.modules.sys.entity.*;
+import com.cn.ant.modules.sys.security.SystemAuthorizingRealm.Principal;
+import com.google.common.collect.Maps;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.UnavailableSecurityManagerException;
 import org.apache.shiro.session.InvalidSessionException;
 import org.apache.shiro.subject.Subject;
 
-import com.cn.ant.common.service.BaseService;
-import com.cn.ant.common.utils.SpringContextHolder;
-import com.cn.ant.modules.sys.dao.AreaMapper;
-import com.cn.ant.modules.sys.dao.MenuMapper;
-import com.cn.ant.modules.sys.dao.OfficeMapper;
-import com.cn.ant.modules.sys.dao.RoleMapper;
-import com.cn.ant.modules.sys.dao.UserMapper;
-import com.cn.ant.modules.sys.entity.Area;
-import com.cn.ant.modules.sys.entity.Menu;
-import com.cn.ant.modules.sys.entity.Office;
-import com.cn.ant.modules.sys.entity.Role;
-import com.cn.ant.modules.sys.entity.User;
-import com.cn.ant.modules.sys.security.SystemAuthorizingRealm.Principal;
-import com.google.common.collect.Maps;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 用户工具类
@@ -57,7 +48,6 @@ public class UserUtils extends BaseService {
 				Principal principal = (Principal)subject.getPrincipal();
 				if (principal!=null){
 					user = userMapper.get(principal.getId());
-//					Hibernate.initialize(user.getRoleList());
 					putCache(CACHE_USER, user);
 				}
 			}catch (UnavailableSecurityManagerException e) {

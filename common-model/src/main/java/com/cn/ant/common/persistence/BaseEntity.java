@@ -12,7 +12,7 @@ import java.io.Serializable;
  * @author ThinkGem
  * @version 2013-01-15
  */
-public abstract class BaseEntity implements Serializable {
+public abstract class BaseEntity<T> implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -29,5 +29,4 @@ public abstract class BaseEntity implements Serializable {
 	public static final String DEL_FLAG_NORMAL = "0";
 	public static final String DEL_FLAG_DELETE = "1";
 	public static final String DEL_FLAG_AUDIT = "2";
-	
 }

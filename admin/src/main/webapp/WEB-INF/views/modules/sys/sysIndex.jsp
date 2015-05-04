@@ -126,19 +126,23 @@
 					</li>
 					<li class="light-blue">
 						<a data-toggle="dropdown" href="#" class="dropdown-toggle">
-							<span class="user-info"> <small>Welcome,</small>
-								Jason </span> <i class="icon-caret-down"></i> </a>
+							<span class="user-info">
+								<samll>欢迎回来<br/></samll>
+								<shiro:principal property="name"/>
+							</span>
+							<i class="icon-caret-down"></i>
+						</a>
 						<ul
 							class="user-menu pull-right dropdown-menu dropdown-yellow dropdown-caret dropdown-closer">
 							<li>
-								<a href="#"> <i class="icon-cog"></i> Settings </a>
+								<a href="${ctx}/sys/user/info" target="mainFrame"> <i class="icon-cog"></i> 个人信息 </a>
 							</li>
 							<li>
-								<a href="#"> <i class="icon-user"></i> Profile </a>
+								<a href="${ctx}/sys/user/modifyPwd" target="mainFrame"> <i class="icon-user"></i> 修改密码 </a>
 							</li>
 							<li class="divider"></li>
 							<li>
-								<a href="#"> <i class="icon-off"></i> Logout </a>
+								<a href="${ctx}/logout" title="退出登录"> <i class="icon-off"></i> 退出 </a>
 							</li>
 						</ul>
 					</li>

@@ -1,12 +1,9 @@
 package com.cn.ant.modules.sys.entity;
 
-import java.util.Date;
-
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-
 import com.cn.ant.common.persistence.BaseEntity;
 import com.fasterxml.jackson.annotation.JsonFormat;
+
+import java.util.Date;
 
 /**
  * 日志Entity sys_log
@@ -64,7 +61,6 @@ public class Log extends BaseEntity {
 		this.createBy = createBy;
 	}
 
-	@Temporal(TemporalType.TIMESTAMP)
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	public Date getCreateDate() {
 		return createDate;
